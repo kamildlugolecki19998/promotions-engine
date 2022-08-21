@@ -2,7 +2,9 @@
 
 namespace App;
 
-interface PromotionEnquiryInterface
+use Symfony\Component\Serializer\SerializerInterface;
+
+interface PromotionEnquiryInterface extends \JsonSerializable
 {
 
 }

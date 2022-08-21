@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DTO\LowestPriceEnquiry;
+use App\Service\Serializer\DTOSerializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,29 +17,28 @@ class ProductsController extends AbstractController
     public function lowestPrice(
         Request             $request,
         int                 $id,
-        SerializerInterface $serializer
+        DTOSerializer $serializer
     ): Response
     {
         if ($request->headers->has('force-fail')) {
             return new JsonResponse(['error' => 'Promotions engine failure message'], $request->headers->get('force_fail'));
         }
         // 1. Deserialize json data into EnquiryDTO
+        /** @var LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry = $serializer->deserialize($request->getContent(), LowestPriceEnquiry::class, 'json');
-        dd($lowestPriceEnquiry);
+//        dd($lowestPriceEnquiry);
 
+        $lowestPriceEnquiry->setDiscountedPrice(50);
+        $lowestPriceEnquiry->setPrice(100);
+        $lowestPriceEnquiry->setPromotionId(3);
+        $lowestPriceEnquiry->setPromotionName('Black friday half price sale');
+
+//        return new JsonResponse($lowestPriceEnquiry, 200);
+        $responseContent = $serializer->serialize($lowestPriceEnquiry, 'json');
+
+        return new Response($responseContent, 200);
         //2. Pass the Enquiry into a prmotions filter the appropirate promotion will be applied
-        return new JsonResponse(
-            [
-                'quantity'         => 5,
-                'request_location' => 'UK',
-                'voucher_code'     => '0U812',
-                'request_date'     => '2022-04-04',
-                'product_id'       => $id,
-                'price'            => 100,
-                'discounted_price' => 50,
-                'promotion_id'     => 3,
-                'promotion_name'   => 'Black friday half price sale'
-            ], 200);
+
     }
 
 
