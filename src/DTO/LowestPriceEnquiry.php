@@ -4,15 +4,17 @@ namespace App\DTO;
 
 use App\Entity\Product;
 use App\PromotionEnquiryInterface;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 class LowestPriceEnquiry implements PromotionEnquiryInterface
 {
 
+    #[Ignore]
+    private ?Product $product;
     private ?int $quantity;
     private ?string $request_location;
     private ?string $voucher_code;
     private ?string $request_date;
-    private ?Product $product;
     private ?int $price;
     private ?int $discounted_price;
     private ?int $promotion_id;
