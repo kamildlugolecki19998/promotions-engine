@@ -14,13 +14,14 @@ class LowestPriceFilterTest extends ServiceTestCase
     public function lowestPricePromotionFilteringIsAppliedCorrectly(): void
     {
         //Given
-
         $product = new Product();
         $product->setPrice(100);
 
         $enquiry = new LowestPriceEnquiry();
         $enquiry->setProduct($product);
         $enquiry->setQuantity(5);
+        $enquiry->setRequestDate('2022-11-27');
+        $enquiry->setVoucherCode("OU812");
 
         $promotions = $this->promotionsDataProvider();
         $lowestPriceFilter = $this->container->get(LowestPriceFilter::class);
@@ -51,9 +52,9 @@ class LowestPriceFilterTest extends ServiceTestCase
 
         $promotionThree = new Promotion();
         $promotionThree->setName('Boy one get one free');
-        $promotionThree->setAdjustment(0.5);
+        $promotionThree->setAdjustment(0.05);
         $promotionThree->setCriteria(["minimum_quantity" => 2]);
-        $promotionThree->setType('event_items_multiplier');
+        $promotionThree->setType('raise_item_discount_modifier');
 
         return [$promotionOne, $promotionTwo, $promotionThree];
     }

@@ -65,7 +65,7 @@ class PriceModifiersTest extends ServiceTestCase
         $promotion = new Promotion();
         $promotion->setName("If more then less");
         $promotion->setAdjustment(0.05);
-        $promotion->setCriteria(["from" => "2022-08-01", "to" => "2022-10-15", "maxItem" => 15]);
+        $promotion->setCriteria(["minimum_quantity" => 2]);
         $promotion->setType('if_more_then_less');
 
         $raiseItemDiscountModifier = new RaiseItemDiscountModifier();
