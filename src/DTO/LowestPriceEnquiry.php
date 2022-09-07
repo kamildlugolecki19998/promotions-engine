@@ -6,7 +6,7 @@ use App\Entity\Product;
 use App\PromotionEnquiryInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-class LowestPriceEnquiry implements PromotionEnquiryInterface
+class LowestPriceEnquiry implements PriceEnquiryInterface
 {
 
     #[Ignore]
