@@ -53,7 +53,9 @@ class ProductsController extends AbstractController
 
 //        dd($promotions);
 
+
         $modifiedEnquiry = $promotionFilter->apply($lowestPriceEnquiry, ...$promotions);
+
 
         $responseContent = $serializer->serialize($modifiedEnquiry, 'json');
 
