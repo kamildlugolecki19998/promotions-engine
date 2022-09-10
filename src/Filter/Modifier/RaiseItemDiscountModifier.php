@@ -10,7 +10,7 @@ class RaiseItemDiscountModifier implements PriceModifierInterface
 
     public function modify(int $price, int $quantity, Promotion $promotion, PromotionEnquiryInterface $enquiry): int
     {
-        $minimumQuantity = date_create($promotion->getCriteria()["minimum_quantity"]);
+        $minimumQuantity = $promotion->getCriteria()["minimum_quantity"];
 
         if($quantity < $minimumQuantity){
             return  $price * $quantity;

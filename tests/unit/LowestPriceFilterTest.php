@@ -25,7 +25,6 @@ class LowestPriceFilterTest extends ServiceTestCase
 
         $promotions = $this->promotionsDataProvider();
         $lowestPriceFilter = $this->container->get(LowestPriceFilter::class);
-
         //When
         $filteredEnquiry = $lowestPriceFilter->apply($enquiry, ...$promotions);
 
@@ -40,7 +39,7 @@ class LowestPriceFilterTest extends ServiceTestCase
     {
         $promotionOne = new Promotion();
         $promotionOne->setName('Black friday half price sale');
-        $promotionOne->setAdjustment(100);
+        $promotionOne->setAdjustment(0.5);
         $promotionOne->setCriteria(["from" => "2022-11-25", "to" => "2022-11-28"]);
         $promotionOne->setType('date_range_multiplier');
 
@@ -51,7 +50,7 @@ class LowestPriceFilterTest extends ServiceTestCase
         $promotionTwo->setType('fixed_price_voucher');
 
         $promotionThree = new Promotion();
-        $promotionThree->setName('Boy one get one free');
+        $promotionThree->setName('Buy more get lower price');
         $promotionThree->setAdjustment(0.05);
         $promotionThree->setCriteria(["minimum_quantity" => 2]);
         $promotionThree->setType('raise_item_discount_modifier');
