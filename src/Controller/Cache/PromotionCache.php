@@ -10,7 +10,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 class PromotionCache
 {
     public function __construct(
-        private CacheInterface $cache,
+        private CacheInterface      $cache,
         private PromotionRepository $promotionRepository
     ) {
     }
@@ -19,7 +19,11 @@ class PromotionCache
     {
         $key = sprintf("find-valid-for-product-%d", $product->getId());
 
-       return $this->cache->get($key, function (ItemInterface $item) use ($product, $requestDate){
+        return $this->cache->get($key, function (ItemInterface $item) use ($product, $requestDate) {
+
+            $item->expiresAfter(5);
+            var_dump('miss');
+
             return $this->promotionRepository->findValidForProduct(
                 $product,
                 date_create_immutable($requestDate)
