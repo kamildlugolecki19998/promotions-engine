@@ -4,8 +4,8 @@ namespace App\Controller\EventSubscriber;
 
 use App\Controller\Event\AfterDtoCreatedEvent;
 use App\Service\Serializer\ServiceException;
+use App\Service\ValidationExceptionData;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class DtoSubscriber implements EventSubscriberInterface
@@ -31,7 +31,10 @@ class DtoSubscriber implements EventSubscriberInterface
         $errors = $this->validator->validate($dto);
 
         if (count($errors) > 0) {
-            throw new ServiceException(422,'Validation failed');
+
+            $validationExceptionData = new ValidationExceptionData(422, 'ConstraintViolationsList', $errors);
+
+            throw new ServiceException($validationExceptionData);
         }
     }
 }

@@ -21,13 +21,13 @@ class DTOSerializer implements SerializerInterface
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
-        $this->serializer = new Serializer(
+        $this->serializer = new Serializer( // z obiektu na format JSON, XML
             [
                 new ObjectNormalizer(
-                    classMetadataFactory: new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader())),
-                    nameConverter:        new CamelCaseToSnakeCaseNameConverter())
+                    classMetadataFactory: new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader())), // serializer składa sie z meta data factory (czyta annotacje i na ich podstawie waliduje)
+                    nameConverter:        new CamelCaseToSnakeCaseNameConverter()) // conwertuje na cammel case nazwy
             ],
-            [new JsonEncoder()]
+            [new JsonEncoder()]  // encoder do JSON
         );
     }
 

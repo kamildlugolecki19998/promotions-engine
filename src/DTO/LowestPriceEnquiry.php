@@ -3,7 +3,6 @@
 namespace App\DTO;
 
 use App\Entity\Product;
-use App\PromotionEnquiryInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 

@@ -39,7 +39,7 @@ class ProductsController extends AbstractController
         if ($request->headers->has('force-fail')) {
             return new JsonResponse(['error' => 'Promotions engine failure message'], $request->headers->get('force_fail'));
         }
-        // 1. Deserialize json data into EnquiryDTO
+        // 1. Deserialize json data into EnquiryDTO (LowestPriceEnquiry)
         /** @var LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry = $serializer->deserialize($request->getContent(), LowestPriceEnquiry::class, 'json');
 
