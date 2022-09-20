@@ -30,7 +30,7 @@ class DtoSubscriberTest extends ServiceTestCase
 
         //Expect
         $this->expectException(ServiceException::class);
-        $this->expectDeprecationMessage('This value should be positive.');
+        $this->expectDeprecationMessage('ConstraintViolationsList');
 
 
         $eventDispatcher->dispatch($event, $event::NAME);

@@ -36,14 +36,12 @@ class ProductsController extends AbstractController
         PromotionFilterInterface $promotionFilter,
         PromotionCache           $promotionCache
     ): Response {
-        if ($request->headers->has('force-fail')) {
-            return new JsonResponse(['error' => 'Promotions engine failure message'], $request->headers->get('force_fail'));
-        }
+
         // 1. Deserialize json data into EnquiryDTO (LowestPriceEnquiry)
         /** @var LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry = $serializer->deserialize($request->getContent(), LowestPriceEnquiry::class, 'json');
 
-        $product = $this->productRepository->find($id); // add error handling
+        $product = $this->productRepository->findOrFail($id); // add error handling
 
         $lowestPriceEnquiry->setProduct($product);
         //caching
@@ -54,7 +52,7 @@ class ProductsController extends AbstractController
 
         $responseContent = $serializer->serialize($modifiedEnquiry, 'json');
 
-        return new Response($responseContent, 200, ['Content-type' => 'application/json']);
+        return new JsonResponse(data: $responseContent, status: Response::HTTP_OK, json: true);
     }
 
 

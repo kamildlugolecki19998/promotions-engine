@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Service\Serializer\ServiceException;
+use App\Service\ServiceExceptionData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +39,20 @@ class ProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findOrFail(int $id)
+    {
+        $product = $this->find($id);
+
+        if(!$product){
+
+            $exceptionData = new ServiceExceptionData(404, 'Product Not Found');
+
+            throw new ServiceException($exceptionData);
+        }
+
+        return $product;
     }
 
 //    /**
